@@ -1,0 +1,32 @@
+[
+    {
+        "id": 1,
+        "customerName": "Karuppasamy",
+        "phoneModel": "Oppo F23",
+        "issue": "display",
+        "status": "in_progress",
+        "priceEstimate": 1800.0,
+        "createdAt": "13-11-2025 10:12:58",
+        "updatedAt": "14-11-2025 11:19:37"
+    },
+    {
+        "id": 2,
+        "customerName": "Anita Sharma",
+        "phoneModel": "iPhone 13",
+        "issue": "k",
+        "status": "completed",
+        "priceEstimate": 1800.0,
+        "createdAt": "13-11-2025 18:02:43",
+        "updatedAt": "13-11-2025 18:04:06"
+    },
+    {
+        "id": 3,
+        "customerName": "Karuppasamy",
+        "phoneModel": "oppo",
+        "issue": "l",
+        "status": "pending",
+        "priceEstimate": 1800.0,
+        "createdAt": "13-11-2025 18:03:56",
+        "updatedAt": "13-11-2025 18:03:56"
+    }
+]
