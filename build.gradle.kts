@@ -28,10 +28,17 @@ application {
     mainClass.set("org.example.ApplicationKt")
 }
 
-tasks.withType<Jar> {
-    manifest {
-        attributes["Main-Class"] = application.mainClass.get()
+tasks{
+    shadowJar {
+        archiveBaseName.set("app")
+        archiveClassifier.set("")
+        archiveVersion.set("")
+        mergeServiceFiles()
+        manifest {
+            attributes["Main-Class"] = "org.example.ApplicationKt"
+        }
     }
+
 }
 
 kotlin {
