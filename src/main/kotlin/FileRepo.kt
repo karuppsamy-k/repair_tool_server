@@ -5,12 +5,28 @@ import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
-class FileRepo(filePath: String) : RepairJobRepository {
+class FileRepo (filePath: String): RepairJobRepository {
+
     private val json = Json { prettyPrint = true; ignoreUnknownKeys = true }
-    private val file = File(filePath)
+    private val fileName = "repairs.json"
+
+    // Render: read from classpath
+    private fun loadFromResource(): String {
+        val stream = this::class.java.classLoader.getResourceAsStream(fileName)
+            ?: throw IllegalStateException("$fileName not found in resources")
+        return stream.bufferedReader().readText()
+    }
+
+    // LOCAL: also allow reading from file during development
+    private val localFile = File("repairs.json") // stored next to jar
 
     override fun readAll(): MutableList<RepairJob> {
-        val content = file.readText()
+        val content = if (localFile.exists()) {
+            localFile.readText()
+        } else {
+            loadFromResource()
+        }
+
         return try {
             if (content.isBlank()) mutableListOf()
             else json.decodeFromString<List<RepairJob>>(content).toMutableList()
@@ -21,9 +37,9 @@ class FileRepo(filePath: String) : RepairJobRepository {
     }
 
     private fun writeAll(items: List<RepairJob>) {
-        file.apply { if (!exists()) createNewFile() else file.writeText(json.encodeToString(items)) }
+        // Render cannot write inside resources, so write next to jar instead
+        localFile.writeText(json.encodeToString(items))
     }
-
 
     override fun create(job: RepairJob): RepairJob {
         val list = readAll()
