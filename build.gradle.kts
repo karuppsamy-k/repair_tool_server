@@ -1,6 +1,7 @@
 plugins {
     kotlin("jvm") version "2.2.20"
     kotlin("plugin.serialization") version "2.0.0"
+    id("com.github.johnrengelman.shadow") version "8.1.1"
     application
 }
 
@@ -27,9 +28,12 @@ application {
     mainClass.set("org.example.ApplicationKt")
 }
 
-tasks.test {
-    useJUnitPlatform()
+tasks.withType<Jar> {
+    manifest {
+        attributes["Main-Class"] = application.mainClass.get()
+    }
 }
+
 kotlin {
     jvmToolchain(17)
 }
